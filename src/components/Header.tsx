@@ -6,6 +6,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { categories } from "@/data/products";
+import logo from "@/assets/logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,12 +42,7 @@ const Header = () => {
           <div className="flex h-16 items-center justify-between gap-4">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2">
-              <div className="gradient-primary rounded-xl p-2">
-                <span className="text-xl font-bold text-white">M</span>
-              </div>
-              <span className="hidden font-display text-xl font-bold gradient-text sm:block">
-                NEXTEN
-              </span>
+              <img src={logo} alt="NEXTEN" className="h-10 w-auto rounded-lg" />
             </Link>
 
             {/* Desktop Navigation */}

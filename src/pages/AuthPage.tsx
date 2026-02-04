@@ -5,6 +5,7 @@ import { Mail, Lock, User, ArrowLeft, Eye, EyeOff, Loader2 } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import logo from "@/assets/logo.png";
 
 const emailSchema = z.string().email("Please enter a valid email address");
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
@@ -145,9 +146,7 @@ const AuthPage = () => {
         <div className="glass-card rounded-3xl p-8">
           {/* Logo */}
           <div className="flex justify-center mb-8">
-            <div className="gradient-primary rounded-2xl p-3">
-              <span className="text-3xl font-bold text-white">M</span>
-            </div>
+            <img src={logo} alt="NEXTEN" className="h-16 w-auto rounded-xl" />
           </div>
 
           {/* Title */}
