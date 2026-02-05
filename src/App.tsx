@@ -13,6 +13,11 @@ import CategoryPage from "./pages/CategoryPage";
 import AuthPage from "./pages/AuthPage";
 import AccountPage from "./pages/AccountPage";
 import NotFound from "./pages/NotFound";
+import VendorApplicationPage from "./pages/VendorApplicationPage";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import UsersPage from "./pages/admin/UsersPage";
+import VendorsPage from "./pages/admin/VendorsPage";
+import RolesPage from "./pages/admin/RolesPage";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +37,12 @@ const App = () => (
                 <Route path="/category/:id" element={<CategoryPage />} />
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/account" element={<AccountPage />} />
+                <Route path="/become-vendor" element={<VendorApplicationPage />} />
+                {/* Admin Routes */}
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/users" element={<UsersPage />} />
+                <Route path="/admin/vendors" element={<VendorsPage />} />
+                <Route path="/admin/roles" element={<RolesPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

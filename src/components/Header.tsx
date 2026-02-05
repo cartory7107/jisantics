@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ShoppingCart, Heart, User, Menu, X, ChevronDown, LogOut } from "lucide-react";
+import { Search, ShoppingCart, Heart, User, Menu, X, ChevronDown, LogOut, Shield, Store } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
 import { categories } from "@/data/products";
 import logo from "@/assets/logo.png";
 
@@ -16,6 +17,7 @@ const Header = () => {
   const { getCartCount } = useCart();
   const { getWishlistCount } = useWishlist();
   const { user, signOut } = useAuth();
+  const { isAdmin, isVendor } = useUserRole();
 
   const cartCount = getCartCount();
   const wishlistCount = getWishlistCount();
@@ -145,27 +147,58 @@ const Header = () => {
                       exit={{ opacity: 0, y: 10 }}
                       className="absolute right-0 top-full mt-2 w-48 glass-card rounded-xl shadow-xl overflow-hidden z-50"
                     >
-                      {user ? (
-                        <>
-                          <Link
-                            to="/account"
-                            onClick={() => setIsUserMenuOpen(false)}
-                            className="block px-4 py-3 hover:bg-muted transition-colors"
-                          >
-                            <p className="font-medium truncate">
-                              {user.user_metadata?.display_name || user.email?.split("@")[0]}
-                            </p>
-                            <p className="text-xs text-muted-foreground truncate">{user.email}</p>
-                          </Link>
-                          <hr className="border-border" />
-                          <button
-                            onClick={handleSignOut}
-                            className="w-full px-4 py-3 flex items-center gap-2 hover:bg-muted transition-colors text-destructive"
-                          >
-                            <LogOut className="h-4 w-4" />
-                            Sign Out
-                          </button>
-                        </>
+                        {user ? (
+                          <>
+                            <Link
+                              to="/account"
+                              onClick={() => setIsUserMenuOpen(false)}
+                              className="block px-4 py-3 hover:bg-muted transition-colors"
+                            >
+                              <p className="font-medium truncate">
+                                {user.user_metadata?.display_name || user.email?.split("@")[0]}
+                              </p>
+                              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                            </Link>
+                            <hr className="border-border" />
+                            {isAdmin && (
+                              <Link
+                                to="/admin"
+                                onClick={() => setIsUserMenuOpen(false)}
+                                className="flex items-center gap-2 px-4 py-3 hover:bg-muted transition-colors text-primary"
+                              >
+                                <Shield className="h-4 w-4" />
+                                Admin Panel
+                              </Link>
+                            )}
+                            {isVendor && (
+                              <Link
+                                to="/vendor"
+                                onClick={() => setIsUserMenuOpen(false)}
+                                className="flex items-center gap-2 px-4 py-3 hover:bg-muted transition-colors text-primary"
+                              >
+                                <Store className="h-4 w-4" />
+                                Vendor Dashboard
+                              </Link>
+                            )}
+                            {!isVendor && !isAdmin && (
+                              <Link
+                                to="/become-vendor"
+                                onClick={() => setIsUserMenuOpen(false)}
+                                className="flex items-center gap-2 px-4 py-3 hover:bg-muted transition-colors"
+                              >
+                                <Store className="h-4 w-4" />
+                                Become a Vendor
+                              </Link>
+                            )}
+                            <hr className="border-border" />
+                            <button
+                              onClick={handleSignOut}
+                              className="w-full px-4 py-3 flex items-center gap-2 hover:bg-muted transition-colors text-destructive"
+                            >
+                              <LogOut className="h-4 w-4" />
+                              Sign Out
+                            </button>
+                          </>
                       ) : (
                         <>
                           <Link
