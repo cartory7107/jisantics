@@ -44,15 +44,138 @@ export type Database = {
         }
         Relationships: []
       }
+      role_permissions: {
+        Row: {
+          created_at: string
+          granted_by: string | null
+          id: string
+          permission: Database["public"]["Enums"]["app_permission"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          granted_by?: string | null
+          id?: string
+          permission: Database["public"]["Enums"]["app_permission"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          granted_by?: string | null
+          id?: string
+          permission?: Database["public"]["Enums"]["app_permission"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vendors: {
+        Row: {
+          banner_url: string | null
+          commission_rate: number | null
+          created_at: string
+          id: string
+          is_active: boolean | null
+          is_approved: boolean | null
+          logo_url: string | null
+          store_description: string | null
+          store_name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          banner_url?: string | null
+          commission_rate?: number | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          is_approved?: boolean | null
+          logo_url?: string | null
+          store_description?: string | null
+          store_name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          banner_url?: string | null
+          commission_rate?: number | null
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          is_approved?: boolean | null
+          logo_url?: string | null
+          store_description?: string | null
+          store_name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_permission: {
+        Args: {
+          _permission: Database["public"]["Enums"]["app_permission"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_permission:
+        | "manage_users"
+        | "manage_vendors"
+        | "manage_products"
+        | "manage_orders"
+        | "manage_categories"
+        | "view_analytics"
+        | "manage_settings"
+        | "manage_roles"
+        | "manage_permissions"
+        | "manage_payments"
+        | "view_reports"
+        | "manage_inventory"
+      app_role:
+        | "super_admin"
+        | "admin"
+        | "vendor"
+        | "shareholder"
+        | "developer"
+        | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -179,6 +302,29 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_permission: [
+        "manage_users",
+        "manage_vendors",
+        "manage_products",
+        "manage_orders",
+        "manage_categories",
+        "view_analytics",
+        "manage_settings",
+        "manage_roles",
+        "manage_permissions",
+        "manage_payments",
+        "view_reports",
+        "manage_inventory",
+      ],
+      app_role: [
+        "super_admin",
+        "admin",
+        "vendor",
+        "shareholder",
+        "developer",
+        "user",
+      ],
+    },
   },
 } as const
